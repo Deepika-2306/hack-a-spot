@@ -113,4 +113,7 @@ The app should be running on http://localhost:3000.
 
 ## 📧 Contact
 For any queries, suggestions, or feedback, feel free to reach out to us:
+- Email: dpasupu@ncsu.edu
 - Email: sshevva@ncsu.edu
+- Email: dpatiba2@ncsu.edu
+- Email: snadend3@ncsu.edu
