@@ -28,10 +28,36 @@ function App() {
     }
   }, []);
 
+  // Fetch & sort parking lots by road distance
+  const fetchAndSortParkingLots = async () => {
+    if (!userCoords) return;
+
+    const lotDistances = await Promise.all(
+      importedParkingLots.map(async (lot) => {
+        const url = `https://router.project-osrm.org/route/v1/driving/${userCoords.lng},${userCoords.lat};${lot.longitude},${lot.latitude}?overview=false`;
+
+        try {
+          const response = await fetch(url);
+          const data = await response.json();
+          if (data.routes.length > 0) {
+            return { ...lot, roadDistance: data.routes[0].distance / 1000 }; // Convert to km
+          }
+        } catch (error) {
+          console.error("Error fetching road distance:", error);
+        }
+        return { ...lot, roadDistance: Infinity }; // Default if no route found
+      })
+    );
+
+    // Sort lots by shortest road distance
+    const sortedLots = lotDistances.sort((a, b) => a.roadDistance - b.roadDistance);
+    setParkingLots(sortedLots);
+    setShowParkingList(true);
+  };
+
   // Handles search action
   const handleSearch = () => {
-    setParkingLots(importedParkingLots);
-    setShowParkingList(true);
+    fetchAndSortParkingLots();
   };
 
   // Handles parking lot click
