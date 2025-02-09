@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { FaMapMarkerAlt } from "react-icons/fa";
+import ResultsDisplay from "./ResultsDisplay"; // Import new component
 
 const SearchForm = ({ onSearch }) => {
   const [location, setLocation] = useState("");
@@ -9,108 +10,64 @@ const SearchForm = ({ onSearch }) => {
   const [budget, setBudget] = useState("");
   const [autoDetect, setAutoDetect] = useState(false);
   const [currentCoords, setCurrentCoords] = useState(null);
+  const [showResults, setShowResults] = useState(false);
   const autocompleteRef = useRef(null);
-
-  // Load Google Places API Autocomplete
-  useEffect(() => {
-    if (window.google) {
-      autocompleteRef.current = new window.google.maps.places.Autocomplete(
-        document.getElementById("location-input"),
-        { types: ["geocode"], componentRestrictions: { country: "us" } }
-      );
-      autocompleteRef.current.addListener("place_changed", handlePlaceSelect);
-    }
-  }, []);
-
-  const handlePlaceSelect = () => {
-    const place = autocompleteRef.current.getPlace();
-    if (place.formatted_address) {
-      setLocation(place.formatted_address);
-    }
-  };
-
-  // Handle auto-detect location
-  const handleAutoDetect = () => {
-    if (autoDetect) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          setCurrentCoords({
-            lat: position.coords.latitude,
-            lng: position.coords.longitude,
-          });
-          fetch(
-            `https://maps.googleapis.com/maps/api/geocode/json?latlng=${position.coords.latitude},${position.coords.longitude}&key=YOUR_GOOGLE_MAPS_API_KEY`
-          )
-            .then((res) => res.json())
-            .then((data) => {
-              if (data.results.length > 0) {
-                setLocation(data.results[0].formatted_address);
-              }
-            });
-        },
-        (error) => console.error(error)
-      );
-    } else {
-      setCurrentCoords(null);
-      setLocation("");
-    }
-  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSearch({ location, date, startTime, endTime, budget, coords: currentCoords });
+    console.log("🔍 Search Clicked! Showing Results...");
+
+    const searchData = { location, date, startTime, endTime, budget, coords: currentCoords };
+    
+    setShowResults(true); // Switch to results view
+    onSearch(searchData); // Pass search data to parent
   };
 
   return (
     <div style={styles.container}>
-      <h2 style={styles.heading}>Find a Parking Spot</h2>
-      <form onSubmit={handleSubmit} style={styles.form}>
-        <label style={styles.label}>Location:</label>
-        <div style={styles.locationWrapper}>
-          <input
-            id="location-input"
-            type="text"
-            value={location}
-            onChange={(e) => setLocation(e.target.value)}
-            placeholder="Enter location"
-            disabled={autoDetect}
-            style={styles.input}
-          />
-          <input
-            type="checkbox"
-            checked={autoDetect}
-            onChange={() => {
-              setAutoDetect(!autoDetect);
-              handleAutoDetect();
-            }}
-          />
-          <span>Auto-detect</span>
-          {currentCoords && (
-            <a
-              href={`https://www.google.com/maps?q=${currentCoords.lat},${currentCoords.lng}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              style={styles.mapLink}
-            >
-              <FaMapMarkerAlt size={20} color="red" />
-            </a>
-          )}
-        </div>
+      {showResults ? (
+        <ResultsDisplay searchData={{ location, date, startTime, endTime, budget }} />
+      ) : (
+        <>
+          <h2 style={styles.heading}>Find a Parking Spot</h2>
+          <form onSubmit={handleSubmit} style={styles.form}>
+            <label style={styles.label}>Location:</label>
+            <div style={styles.locationWrapper}>
+              <input
+                id="location-input"
+                type="text"
+                value={location}
+                onChange={(e) => setLocation(e.target.value)}
+                placeholder="Enter location"
+                disabled={autoDetect}
+                style={styles.input}
+              />
+              <input
+                type="checkbox"
+                checked={autoDetect}
+                onChange={() => {
+                  setAutoDetect(!autoDetect);
+                }}
+              />
+              <span>Auto-detect</span>
+            </div>
 
-        <label style={styles.label}>Date:</label>
-        <input type="date" value={date} onChange={(e) => setDate(e.target.value)} required style={styles.input} />
+            <label style={styles.label}>Date:</label>
+            <input type="date" value={date} onChange={(e) => setDate(e.target.value)} required style={styles.input} />
 
-        <label style={styles.label}>Time From:</label>
-        <input type="time" value={startTime} onChange={(e) => setStartTime(e.target.value)} required style={styles.input} />
+            <label style={styles.label}>Time From:</label>
+            <input type="time" value={startTime} onChange={(e) => setStartTime(e.target.value)} required style={styles.input} />
 
-        <label style={styles.label}>Time To:</label>
-        <input type="time" value={endTime} onChange={(e) => setEndTime(e.target.value)} required style={styles.input} />
+            <label style={styles.label}>Time To:</label>
+            <input type="time" value={endTime} onChange={(e) => setEndTime(e.target.value)} required style={styles.input} />
 
-        <label style={styles.label}>Budget ($):</label>
-        <input type="number" value={budget} onChange={(e) => setBudget(e.target.value)} style={styles.input} />
+            <label style={styles.label}>Budget ($):</label>
+            <input type="number" value={budget} onChange={(e) => setBudget(e.target.value)} style={styles.input} />
 
-        <button type="submit" style={styles.button}>Search</button>
-      </form>
+            <button type="submit" style={styles.button}>Search</button>
+          </form>
+        </>
+      )}
     </div>
   );
 };
@@ -123,7 +80,6 @@ const styles = {
     padding: "20px",
     background: "#f8f9fa",
     borderRadius: "8px",
-    boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
   },
   heading: {
     textAlign: "center",
@@ -150,15 +106,6 @@ const styles = {
     border: "none",
     borderRadius: "4px",
     cursor: "pointer",
-  },
-  locationWrapper: {
-    display: "flex",
-    alignItems: "center",
-    gap: "10px",
-    marginBottom: "10px",
-  },
-  mapLink: {
-    textDecoration: "none",
   },
 };
 
