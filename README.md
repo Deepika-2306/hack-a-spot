@@ -41,9 +41,9 @@ We implemented this in our Node.js backend to sort parking lots by distance dyna
     }
 
 ## Why Haversine?
-✅ Accurate: Takes Earth's curvature into account.
-✅ Efficient: Uses simple trigonometric calculations, making it fast.
-✅ Ideal for Location-Based Services: Perfect for sorting parking spots by distance.
+- ✅ Accurate: Takes Earth's curvature into account. 
+- ✅ Efficient: Uses simple trigonometric calculations, making it fast.
+- ✅ Ideal for Location-Based Services: Perfect for sorting parking spots by distance.
 
 ---
 
