@@ -25,8 +25,8 @@ In our Parking Spot Reservation System, we use the Haversine Distance Algorithm 
 
 Haversine Algorithm in JavaScript (Used in Our Project)
 We implemented this in our Node.js backend to sort parking lots by distance dynamically:
-  ```bash
-      function haversineDistance(lat1, lon1, lat2, lon2) {
+      
+function haversineDistance(lat1, lon1, lat2, lon2) {
         const R = 6371; // Earth's radius in km
         const toRad = (angle) => (angle * Math.PI) / 180; // Convert degrees to radians
 
