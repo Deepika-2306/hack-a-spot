@@ -1,0 +1,30 @@
+[
+    {
+      "id": 1,
+      "name": "City Center Parking",
+      "latitude": 35.7796,
+      "longitude": -78.6382,
+      "floors": 3,
+      "cost_per_hour": 5.0,
+      "total_slots": 200
+    },
+    {
+      "id": 2,
+      "name": "Main Street Garage",
+      "latitude": 35.7854,
+      "longitude": -78.6561,
+      "floors": 5,
+      "cost_per_hour": 3.5,
+      "total_slots": 300
+    },
+    {
+      "id": 3,
+      "name": "Downtown Plaza Parking",
+      "latitude": 35.7741,
+      "longitude": -78.6457,
+      "floors": 2,
+      "cost_per_hour": 4.0,
+      "total_slots": 150
+    }
+  ]
+  

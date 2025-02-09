@@ -7,10 +7,14 @@ const Header = () => {
     setMenuOpen(!menuOpen);
   };
 
+  const goToHome = () => {
+    window.location.href = "/"; // Redirects to home
+  };
+
   return (
     <header style={styles.header}>
       <div style={styles.titleContainer}>
-        <h1 style={styles.title}>Hack A Spot</h1>
+        <h1 style={styles.title} onClick={goToHome}>Hack A Spot</h1> {/* ✅ Clickable Title */}
       </div>
       <nav style={styles.nav}>
         <button style={styles.navButton} onClick={toggleMenu}>☰</button>
@@ -41,6 +45,8 @@ const styles = {
   },
   title: {
     margin: 0,
+    cursor: "pointer", // ✅ Indicates clickability
+    textDecoration: "none",
   },
   nav: {
     position: "relative",

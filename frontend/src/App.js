@@ -1,21 +1,73 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Header from "./components/Header";
 import SearchForm from "./components/SearchForm";
 import MapDisplay from "./components/MapDisplay";
-import "mapbox-gl/dist/mapbox-gl.css";
+import ParkingLists from "./components/ParkingLists";
+import ParkingDetails from "./components/ParkingDetails";
+import importedParkingLots from "./data/parkingLots.json";
 
 function App() {
-  const [searchData, setSearchData] = useState(null);
+  const [parkingLots, setParkingLots] = useState([]);
+  const [userCoords, setUserCoords] = useState(null);
+  const [showParkingList, setShowParkingList] = useState(false);
+  const [selectedParkingLot, setSelectedParkingLot] = useState(null);
+
+  // Automatically detect user's location on mount
+  useEffect(() => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const coords = {
+            lat: position.coords.latitude,
+            lng: position.coords.longitude,
+          };
+          setUserCoords(coords);
+        },
+        (error) => console.error("Geolocation error:", error)
+      );
+    }
+  }, []);
+
+  // Handles search action
+  const handleSearch = () => {
+    setParkingLots(importedParkingLots);
+    setShowParkingList(true);
+  };
+
+  // Handles parking lot click
+  const handleParkingLotClick = (lot) => {
+    setSelectedParkingLot(lot);
+  };
+
+  // Handles back button in ParkingLists
+  const handleBackToSearch = () => {
+    setShowParkingList(false);
+  };
+
+  // Handles back button in ParkingDetails
+  const handleBackToList = () => {
+    setSelectedParkingLot(null);
+  };
 
   return (
-    <div>
+    <div style={styles.appContainer}>
       <Header />
-      <div style={styles.container}>
-        <div style={styles.formContainer}>
-          <SearchForm onSearch={setSearchData} />
+      <div style={styles.mainContainer}>
+        <div style={styles.leftContainer}>
+          {selectedParkingLot ? (
+            <ParkingDetails lot={selectedParkingLot} goBack={handleBackToList} />
+          ) : showParkingList ? (
+            <ParkingLists lots={parkingLots} onLotClick={handleParkingLotClick} goBack={handleBackToSearch} />
+          ) : (
+            <SearchForm onSearch={handleSearch} />
+          )}
         </div>
-        <div style={styles.mapContainer}>
-          <MapDisplay location={searchData?.location} coords={searchData?.coords} />
+        <div style={styles.rightContainer}>
+          <MapDisplay 
+            userCoords={userCoords} 
+            parkingLots={showParkingList ? parkingLots : []} 
+            selectedLot={selectedParkingLot} 
+          />
         </div>
       </div>
     </div>
@@ -23,19 +75,31 @@ function App() {
 }
 
 const styles = {
-  container: {
+  appContainer: {
     display: "flex",
-    height: "90vh",
-    gap: "10px", // Adds space between form and map
-    padding: "10px", // Adds some padding
+    flexDirection: "column",
+    height: "100vh",
   },
-  formContainer: {
-    flex: 1, // Takes 1/3 of the available space
-    maxWidth: "40%", // Restricts form width
+  mainContainer: {
+    display: "flex",
+    flex: 1,
+    width: "100vw",
   },
-  mapContainer: {
-    flex: 2, // Takes 2/3 of the available space
-    maxWidth: "60%", // Restricts map width
+  leftContainer: {
+    flex: 1,
+    width: "40vw",
+    maxWidth: "40%",
+    backgroundColor: "#f8f9fa",
+    display: "flex",
+    flexDirection: "column",
+    padding: "20px",
+    overflowY: "auto",
+  },
+  rightContainer: {
+    flex: 2,
+    width: "60vw",
+    maxWidth: "60%",
+    height: "100vh",
   },
 };
 
