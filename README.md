@@ -9,7 +9,41 @@ Hack A Spot is an intelligent, location-based parking spot reservation system de
 ## 🔧 Tech Stack  
 - **Frontend:** React.js  
 - **Map Integration:** Leaflet.js  
+- **Backend:** Node.js, Express.js  
+- **Database:** MongoDB
+- **Map Integration:** Leaflet.js  
+- **API Requests:** Axios  
+- **Version Control:** Git, GitHub  
+- **Data Format:** JSON  
+- **Development Tools:** Visual Studio Code  
 - **Deployment:** Heroku  
+
+---
+
+## Haversine Distance Algorithm in Our Project
+In our Parking Spot Reservation System, we use the Haversine Distance Algorithm to calculate the distance between the user's location and available parking spots. This helps us sort parking locations by proximity, ensuring users get the most relevant and nearest parking options.
+
+Haversine Algorithm in JavaScript (Used in Our Project)
+We implemented this in our Node.js backend to sort parking lots by distance dynamically:
+  ```bash
+      function haversineDistance(lat1, lon1, lat2, lon2) {
+    const R = 6371; // Earth's radius in km
+    const toRad = (angle) => (angle * Math.PI) / 180; // Convert degrees to radians
+
+    const dLat = toRad(lat2 - lat1);
+    const dLon = toRad(lon2 - lon1);
+    const a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+              Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) *
+              Math.sin(dLon / 2) * Math.sin(dLon / 2);
+
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    return R * c; // Distance in km
+}
+
+## Why Haversine?
+✅ Accurate: Takes Earth's curvature into account.
+✅ Efficient: Uses simple trigonometric calculations, making it fast.
+✅ Ideal for Location-Based Services: Perfect for sorting parking spots by distance.
 
 ---
 
