@@ -3,12 +3,14 @@ import React, { useState } from "react";
 const Header = () => {
   const [menuOpen, setMenuOpen] = useState(false);
 
+  // Toggle menu visibility
   const toggleMenu = () => {
-    setMenuOpen(!menuOpen);
+    setMenuOpen((prev) => !prev);
   };
 
+  // Redirect to Home
   const goToHome = () => {
-    window.location.href = "/"; // Redirects to home
+    window.location.href = "/"; // ✅ Redirect to Home
   };
 
   return (
@@ -20,8 +22,7 @@ const Header = () => {
         <button style={styles.navButton} onClick={toggleMenu}>☰</button>
         {menuOpen && (
           <div style={styles.dropdownMenu}>
-            <a href="/profile" style={styles.menuItem}>Profile</a>
-            <a href="/parking-lots" style={styles.menuItem}>Parking Lots</a>
+            <a href="/" style={styles.menuItem} onClick={goToHome}>🏠 Home</a> {/* ✅ Redirect to Home */}
           </div>
         )}
       </nav>
@@ -38,6 +39,7 @@ const styles = {
     backgroundColor: "#333",
     color: "white",
     position: "relative",
+    zIndex: 1000, // ✅ Ensures header appears above other elements
   },
   titleContainer: {
     flex: 1,
@@ -68,12 +70,15 @@ const styles = {
     display: "flex",
     flexDirection: "column",
     boxShadow: "0px 4px 6px rgba(0, 0, 0, 0.1)",
+    zIndex: 2000, // 🔥 FIX: Ensures dropdown is ABOVE the rightContainer
+    width: "150px", // Optional: Adjust width
   },
   menuItem: {
     color: "white",
     textDecoration: "none",
-    padding: "8px 12px",
+    padding: "10px",
     display: "block",
+    cursor: "pointer",
   },
 };
 
