@@ -1,5 +1,4 @@
-# Hack-a-Spot
-Deployed Link: https://hack-a-spot.biz/
+
 # Hack A Spot 🚗  
 **A Smart Parking Spot Reservation System**  
 
@@ -26,7 +25,7 @@ Hack A Spot is an intelligent, location-based parking spot reservation system de
 
 ## 🌟 Future Enhancements  
 1. **Live Parking Updates Using CCTV Feeds**  
-  -Integrate real-time *CCTV camera feeds* to detect available parking spots.  
+  - Integrate real-time *CCTV camera feeds* to detect available parking spots.  
   - Use *computer vision techniques (OpenCV, TensorFlow, or YOLO)* to process video streams and identify empty spaces automatically.
 
 2. **Payment Integration**  
