@@ -14,6 +14,30 @@ function App() {
   const [selectedParkingLot, setSelectedParkingLot] = useState(null);
   const [showParkingLotView, setShowParkingLotView] = useState(false);
 
+  // 🏎️ Haversine Formula to Calculate Distance in KM
+  const haversineDistance = (lat1, lon1, lat2, lon2) => {
+    if (!lat1 || !lon1 || !lat2 || !lon2) {
+      console.warn("Invalid coordinates for distance calculation:", { lat1, lon1, lat2, lon2 });
+      return Infinity; // Assign large value if invalid, to push to end of sorted list
+    }
+
+    const toRad = (angle) => (angle * Math.PI) / 180;
+    const R = 6371; // Earth's radius in km
+
+    const dLat = toRad(lat2 - lat1);
+    const dLon = toRad(lon2 - lon1);
+
+    const a =
+      Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+      Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) *
+      Math.sin(dLon / 2) * Math.sin(dLon / 2);
+
+    const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+    return R * c; // Distance in km
+  };
+
+  // 🛰️ Get User's Geolocation
   useEffect(() => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
@@ -22,18 +46,48 @@ function App() {
             lat: position.coords.latitude,
             lng: position.coords.longitude,
           };
+          console.log("✅ User Coordinates:", coords); // Debugging
           setUserCoords(coords);
         },
-        (error) => console.error("Geolocation error:", error)
+        (error) => console.error("🚨 Geolocation error:", error)
       );
     }
   }, []);
+  
 
   const handleSearch = () => {
-    setParkingLots(importedParkingLots);
+    if (!userCoords || !userCoords.lat || !userCoords.lng) {
+      alert("🚨 User location not available!");
+      return;
+    }
+  
+    console.log("🔍 Checking Parking Lot Data:");
+    importedParkingLots.forEach(lot => {
+      console.log(`📍 ${lot.name} - latitude: ${lot.latitude}, longitude: ${lot.longitude}`);
+    });
+  
+    const updatedLots = importedParkingLots
+      .map((lot) => {
+        if (!lot.latitude || !lot.longitude) {
+          console.warn(`🚨 Missing latitude/longitude for: ${lot.name}`);
+          return { ...lot, roadDistance: Infinity };
+        }
+  
+        return {
+          ...lot,
+          roadDistance: haversineDistance(userCoords.lat, userCoords.lng, lot.latitude, lot.longitude), // 🛠️ Fixed field names
+        };
+      })
+      .sort((a, b) => a.roadDistance - b.roadDistance);
+  
+    console.log("🚀 Updated Parking Lots with Distances:", updatedLots); // Debugging
+  
+    setParkingLots(updatedLots);
     setShowParkingList(true);
   };
+  
 
+  // 📌 Handlers for Navigation
   const handleParkingLotClick = (lot) => {
     setSelectedParkingLot(lot);
   };

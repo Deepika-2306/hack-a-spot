@@ -1,17 +1,20 @@
 import React from "react";
 
 const ParkingLists = ({ lots, onLotClick, goBack }) => {
+  // Sort by shortest road distance
+  const sortedLots = [...lots].sort((a, b) => (a.roadDistance ?? Infinity) - (b.roadDistance ?? Infinity));
+
   return (
     <div style={styles.container}>
       <button style={styles.backButton} onClick={goBack}>← Back</button> {/* Back Button */}
-      <h3>Available Parking Lots (Sorted by Road Distance)</h3>
+      <h3>Available Parking Lots (Sorted by Shortest Distance)</h3>
       <ul>
-        {lots.map((lot) => (
+        {sortedLots.map((lot) => (
           <li key={lot.id} style={styles.listItem} onClick={() => onLotClick(lot)}>
             <strong>{lot.name}</strong>
-            <p>Floors: {lot.floors}</p>
+            <p>Available Slots: {lot.available_slots}</p>
             <p>Cost: ${lot.cost_per_hour} per hour</p>
-            <p><strong>Road Distance:</strong> {lot.roadDistance?.toFixed(2)} km</p>
+            <p><strong>Distance:</strong> {lot.roadDistance?.toFixed(2)} km</p>
           </li>
         ))}
       </ul>

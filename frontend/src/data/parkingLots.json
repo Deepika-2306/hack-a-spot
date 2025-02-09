@@ -4,27 +4,179 @@
       "name": "City Center Parking",
       "latitude": 35.7796,
       "longitude": -78.6382,
-      "floors": 3,
       "cost_per_hour": 5.0,
-      "total_slots": 200
+      "total_slots": 200,
+      "available_slots": 80
     },
     {
       "id": 2,
       "name": "Main Street Garage",
       "latitude": 35.7854,
       "longitude": -78.6561,
-      "floors": 5,
       "cost_per_hour": 3.5,
-      "total_slots": 300
+      "total_slots": 300,
+      "available_slots": 90
     },
     {
       "id": 3,
       "name": "Downtown Plaza Parking",
       "latitude": 35.7741,
       "longitude": -78.6457,
-      "floors": 2,
       "cost_per_hour": 4.0,
-      "total_slots": 150
+      "total_slots": 150,
+      "available_slots": 60
+    },
+    {
+      "id": 4,
+      "name": "Oak Street Parking",
+      "latitude": 35.7808,
+      "longitude": -78.6505,
+      "cost_per_hour": 2.5,
+      "total_slots": 180,
+      "available_slots": 75
+    },
+    {
+      "id": 5,
+      "name": "Raleigh Tower Lot",
+      "latitude": 35.7890,
+      "longitude": -78.6420,
+      "cost_per_hour": 6.0,
+      "total_slots": 250,
+      "available_slots": 100
+    },
+    {
+      "id": 6,
+      "name": "Market Square Parking",
+      "latitude": 35.7715,
+      "longitude": -78.6350,
+      "cost_per_hour": 3.0,
+      "total_slots": 220,
+      "available_slots": 85
+    },
+    {
+      "id": 7,
+      "name": "South End Garage",
+      "latitude": 35.7693,
+      "longitude": -78.6398,
+      "cost_per_hour": 4.2,
+      "total_slots": 275,
+      "available_slots": 120
+    },
+    {
+      "id": 8,
+      "name": "Capital Blvd Parking",
+      "latitude": 35.7921,
+      "longitude": -78.6254,
+      "cost_per_hour": 5.5,
+      "total_slots": 320,
+      "available_slots": 130
+    },
+    {
+      "id": 9,
+      "name": "West Raleigh Lot",
+      "latitude": 35.7758,
+      "longitude": -78.6602,
+      "cost_per_hour": 3.8,
+      "total_slots": 190,
+      "available_slots": 95
+    },
+    {
+      "id": 10,
+      "name": "Pine Street Parking",
+      "latitude": 35.7817,
+      "longitude": -78.6309,
+      "cost_per_hour": 2.9,
+      "total_slots": 140,
+      "available_slots": 50
+    },
+    {
+      "id": 11,
+      "name": "Hillsborough Street Garage",
+      "latitude": 35.7872,
+      "longitude": -78.6610,
+      "cost_per_hour": 4.8,
+      "total_slots": 210,
+      "available_slots": 85
+    },
+    {
+      "id": 12,
+      "name": "NCSU Centennial Parking",
+      "latitude": 35.7705,
+      "longitude": -78.6754,
+      "cost_per_hour": 3.2,
+      "total_slots": 260,
+      "available_slots": 120
+    },
+    {
+      "id": 13,
+      "name": "Wolf Plaza Parking",
+      "latitude": 35.7849,
+      "longitude": -78.6702,
+      "cost_per_hour": 5.1,
+      "total_slots": 300,
+      "available_slots": 140
+    },
+    {
+      "id": 14,
+      "name": "Cameron Village Garage",
+      "latitude": 35.7954,
+      "longitude": -78.6553,
+      "cost_per_hour": 3.0,
+      "total_slots": 180,
+      "available_slots": 90
+    },
+    {
+      "id": 15,
+      "name": "Pullen Park Parking",
+      "latitude": 35.7751,
+      "longitude": -78.6768,
+      "cost_per_hour": 2.7,
+      "total_slots": 220,
+      "available_slots": 110
+    },
+    {
+      "id": 16,
+      "name": "Glenwood South Parking",
+      "latitude": 35.7933,
+      "longitude": -78.6489,
+      "cost_per_hour": 6.3,
+      "total_slots": 290,
+      "available_slots": 150
+    },
+    {
+      "id": 17,
+      "name": "Method Road Parking",
+      "latitude": 35.7658,
+      "longitude": -78.6825,
+      "cost_per_hour": 3.9,
+      "total_slots": 170,
+      "available_slots": 70
+    },
+    {
+      "id": 18,
+      "name": "North Hills Mall Parking",
+      "latitude": 35.8441,
+      "longitude": -78.6428,
+      "cost_per_hour": 4.5,
+      "total_slots": 330,
+      "available_slots": 200
+    },
+    {
+      "id": 19,
+      "name": "Beryl Road Parking",
+      "latitude": 35.7812,
+      "longitude": -78.7051,
+      "cost_per_hour": 2.8,
+      "total_slots": 160,
+      "available_slots": 80
+    },
+    {
+      "id": 20,
+      "name": "Western Blvd Parking",
+      "latitude": 35.7710,
+      "longitude": -78.6904,
+      "cost_per_hour": 3.7,
+      "total_slots": 200,
+      "available_slots": 100
     }
-  ]
-  
+]
