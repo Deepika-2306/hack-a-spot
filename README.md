@@ -74,3 +74,9 @@ Start the server by running:
    ```bash
    npm start
 The app should be running on http://localhost:3000.
+
+---
+
+## 📧 Contact
+For any queries, suggestions, or feedback, feel free to reach out to us:
+- Email: sshevva@ncsu.edu
