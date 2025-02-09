@@ -42,7 +42,7 @@ Hack A Spot is an intelligent, location-based parking spot reservation system de
 ## 🎥 Demo  
 ### Steps to Use the Project  
 1. **Access the Demo Link:**  
-   https://www.youtube.com/watch?v=RLwsxW2KNTY
+  https://www.youtube.com/watch?v=6KUHrG7CseY
 2. **Search for a Parking Spot:**  
    - Enter the **date, start and end time**, and budget.  
    - Click "Search" to view available parking lots.  
@@ -60,7 +60,17 @@ https://hack-a-spot.biz/
 ---
 
 ## 🛠 Steps to Run Locally  
-1. **Clone the Repository:**  
+1. **Clone the Repository:**
+Open your terminal and run:  
    ```bash
    git clone https://github.com/your-repo/hack-a-spot.git
-   cd hack-a-spot
+   cd hack-a-spot/front-end
+2. **Install Dependencies:**
+Run the following command to install all the necessary dependencies:
+   ```bash
+   npm install
+3. **Start the Development Server:**
+Start the server by running:
+   ```bash
+   npm start
+The app should be running on http://localhost:3000.
