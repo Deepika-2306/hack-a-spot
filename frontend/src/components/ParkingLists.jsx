@@ -7,17 +7,22 @@ const ParkingLists = ({ lots, onLotClick, goBack }) => {
   return (
     <div style={styles.container}>
       <button style={styles.backButton} onClick={goBack}>← Back</button> {/* Back Button */}
-      <h3>Available Parking Lots (Sorted by Shortest Distance)</h3>
-      <ul>
-        {sortedLots.map((lot) => (
-          <li key={lot.id} style={styles.listItem} onClick={() => onLotClick(lot)}>
-            <strong>{lot.name}</strong>
-            <p>Available Slots: {lot.available_slots}</p>
-            <p>Cost: ${lot.cost_per_hour} per hour</p>
-            <p><strong>Distance:</strong> {lot.roadDistance?.toFixed(2)} km</p>
-          </li>
-        ))}
-      </ul>
+      <h3>Available Parking Lots (Sorted by Shortest Distance & Within Budget)</h3>
+      {lots.length === 0 ? (
+        <p style={styles.noResults}>🚫 No parking lots found within your budget.</p>
+      ) : (
+        <ul>
+          {sortedLots.map((lot) => (
+            <li key={lot.id} style={styles.listItem} onClick={() => onLotClick(lot)}>
+              <strong>{lot.name}</strong>
+              <p>Floors: {lot.floors}</p>
+              <p>Cost per Hour: ${lot.cost_per_hour}</p>
+              <p><strong>Road Distance:</strong> {lot.roadDistance?.toFixed(2)} km</p>
+              <p style={styles.cost}><strong>Estimated Total Cost:</strong> ${lot.estimatedCost?.toFixed(2)}</p> {/* 🔥 Display total cost */}
+            </li>
+          ))}
+        </ul>
+      )}
     </div>
   );
 };
@@ -45,6 +50,15 @@ const styles = {
     background: "#fff",
     borderRadius: "5px",
     cursor: "pointer",
+  },
+  cost: {
+    color: "#28a745",
+    fontWeight: "bold",
+  },
+  noResults: {
+    textAlign: "center",
+    fontStyle: "italic",
+    color: "#dc3545",
   },
 };
 

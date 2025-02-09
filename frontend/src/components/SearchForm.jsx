@@ -13,10 +13,10 @@ const SearchForm = ({ onSearch }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (isFormValid) {
-      console.log("Search button clicked! Triggering onSearch...");
-      onSearch(); // ✅ Trigger search
+      console.log("✅ Search button clicked! Sending data...");
+      onSearch(date, startTime, endTime, parseFloat(budget)); // 🛠️ Pass budget as a number
     } else {
-      console.warn("Please fill in all fields before searching!");
+      console.warn("⚠️ Please fill in all fields before searching!");
     }
   };
 

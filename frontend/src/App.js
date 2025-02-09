@@ -55,7 +55,7 @@ function App() {
   }, []);
   
 
-  const handleSearch = () => {
+  const handleSearch = (date, startTime, endTime, budget) => {
     if (!userCoords || !userCoords.lat || !userCoords.lng) {
       alert("🚨 User location not available!");
       return;
@@ -66,6 +66,18 @@ function App() {
       console.log(`📍 ${lot.name} - latitude: ${lot.latitude}, longitude: ${lot.longitude}`);
     });
   
+    // 🔹 Round start & end times to the nearest hour
+    const roundToNearestHour = (time) => {
+      let [hour, minute] = time.split(":").map(Number);
+      return minute >= 30 ? hour + 1 : hour; // Round up if >= 30 min
+    };
+  
+    const startHour = roundToNearestHour(startTime);
+    const endHour = roundToNearestHour(endTime);
+    const totalHours = Math.max(1, endHour - startHour); // Ensure at least 1 hour
+  
+    console.log(`⏳ Parking Duration: ${totalHours} hours`);
+  
     const updatedLots = importedParkingLots
       .map((lot) => {
         if (!lot.latitude || !lot.longitude) {
@@ -73,18 +85,24 @@ function App() {
           return { ...lot, roadDistance: Infinity };
         }
   
+        const distance = haversineDistance(userCoords.lat, userCoords.lng, lot.latitude, lot.longitude);
+        const estimatedCost = lot.cost_per_hour * totalHours;
+  
         return {
           ...lot,
-          roadDistance: haversineDistance(userCoords.lat, userCoords.lng, lot.latitude, lot.longitude), // 🛠️ Fixed field names
+          roadDistance: distance,
+          estimatedCost: estimatedCost, // 🔥 Store the calculated cost
         };
       })
-      .sort((a, b) => a.roadDistance - b.roadDistance);
+      .filter((lot) => lot.estimatedCost <= budget) // 💰 Show only lots within budget
+      .sort((a, b) => a.roadDistance - b.roadDistance); // 🚀 Sort by shortest distance
   
-    console.log("🚀 Updated Parking Lots with Distances:", updatedLots); // Debugging
+    console.log("🚀 Updated Parking Lots (Filtered by Budget):", updatedLots); // Debugging
   
     setParkingLots(updatedLots);
     setShowParkingList(true);
   };
+  
   
 
   // 📌 Handlers for Navigation
