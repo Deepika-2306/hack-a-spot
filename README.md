@@ -16,7 +16,7 @@ Hack A Spot is an intelligent, location-based parking spot reservation system de
 - **Version Control:** Git, GitHub  
 - **Data Format:** JSON  
 - **Development Tools:** Visual Studio Code  
-- **Deployment:** Heroku  
+- **Deployment:** Netlify 
 
 ---
 
@@ -104,7 +104,7 @@ Open your terminal and run:
 Run the following command to install all the necessary dependencies:
    ```bash
    npm install
-3. **Start the Development Server:**
+3. **Start the Server:**
 Start the server by running:
    ```bash
    npm start
