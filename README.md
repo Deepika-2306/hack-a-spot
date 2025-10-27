@@ -4,6 +4,8 @@
 
 Hack A Spot is an intelligent, location-based parking spot reservation system designed to simplify parking. Users can search for parking spots, view availability in real time, and reserve a spot based on location, time, and budget.
 
+🏆 Winner - second place at Hack-NCState
+
 ---
 
 ## 🔧 Tech Stack  
